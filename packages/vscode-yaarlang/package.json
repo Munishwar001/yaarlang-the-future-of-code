@@ -1,0 +1,34 @@
+{
+  "name": "vscode-yaarlang",
+  "displayName": "YaarLang",
+  "description": "Syntax highlighting for YaarLang (.yl) files",
+  "version": "0.0.1",
+  "publisher": "munishwarkalra",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": ["Programming Languages"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Munishwar001/yaarlang-the-future-of-code.git",
+    "directory": "packages/vscode-yaarlang"
+  },
+  "license": "MIT",
+  "contributes": {
+    "languages": [
+      {
+        "id": "yaarlang",
+        "aliases": ["YaarLang", "yaarlang"],
+        "extensions": [".yl"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "yaarlang",
+        "scopeName": "source.yaarlang",
+        "path": "./syntaxes/yaarlang.tmLanguage.json"
+      }
+    ]
+  }
+}
