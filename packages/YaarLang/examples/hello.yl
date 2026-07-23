@@ -1,0 +1,5 @@
+maan_lo x = 10
+maan_lo y = 20
+
+maan_lo sum = x + y
+bol sum

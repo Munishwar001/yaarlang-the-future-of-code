@@ -1,0 +1,23 @@
+{
+  "name": "yaarlang",
+  "version": "1.0.0",
+  "description": "A simple programming language built with JavaScript",
+  "main": "compiler.js",
+  "bin": {
+    "yaarlang": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js examples/hello.yl",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+   "keywords": [
+    "compiler",
+    "programming-language",
+    "lexer",
+    "parser",
+    "javascript"
+  ],
+  "author": "Munishwar kalra",
+  "license": "MIT",
+  "type": "module"
+}
