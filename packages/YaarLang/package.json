@@ -19,5 +19,14 @@
   ],
   "author": "Munishwar kalra",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Munishwar001/yaarlang-the-future-of-code.git",
+    "directory": "packages/YaarLang"
+  },
+  "homepage": "https://github.com/Munishwar001/yaarlang-the-future-of-code/tree/main/packages/YaarLang#readme",
+  "bugs": {
+    "url": "https://github.com/Munishwar001/yaarlang-the-future-of-code/issues"
+  }
 }

@@ -68,7 +68,7 @@ YaarLang/
 
 ## Status
 
-This is an early, minimal implementation intended for learning how compilers/interpreters work. Currently supported: variable declarations and printing. There is no support yet for conditionals, loops, functions, or string literals.
+This is an early, minimal implementation intended for learning how compilers/interpreters work. Currently supported: variable declarations, printing, string literals, and arithmetic expressions. There is no support yet for conditionals, loops, or functions.
 
 ## License
 

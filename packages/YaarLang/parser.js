@@ -14,7 +14,9 @@ export default function parser(tokens) {
             tokens.shift(); // remove '='
             let expression = '';
             while(tokens.length > 0 && tokens[0].type !== 'keyword'){
-                expression += tokens.shift().value + ' ';
+                const t = tokens.shift();
+                const piece = t.type === 'string' ? JSON.stringify(t.value) : t.value;
+                expression += piece + ' ';
             }
             declaration.value = expression.trim();
          }

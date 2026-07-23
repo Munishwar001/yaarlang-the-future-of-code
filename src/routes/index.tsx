@@ -1,17 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Nav } from "@/components/yaarlang/Nav";
 import { CodeEditor } from "@/components/yaarlang/CodeEditor";
 import {
-  Features, Playground, Showcase, Workflow, Performance,
-  Ecosystem, DocsPreview, Community, CTA, Footer,
+  InstallBanner, Features, Playground, Showcase, Workflow, Performance,
+  Ecosystem, CTA, Footer,
 } from "@/components/yaarlang/Sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "YaarLang — Programming should feel natural" },
-      { name: "description", content: "YaarLang is a modern programming language built for developers who want clean syntax, fast performance, and an enjoyable coding experience." },
+      { name: "description", content: "Write code that reads like you think. YaarLang keeps things simple, fast, and fun." },
       { property: "og:title", content: "YaarLang — Programming should feel natural" },
       { property: "og:description", content: "A next-generation programming language: readable, powerful, and delightful to use." },
       { property: "og:type", content: "website" },
@@ -47,21 +47,23 @@ function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-[18px] leading-relaxed text-muted-foreground">
-            YaarLang is a modern programming language built for developers who want clean syntax,
-            fast performance, and an enjoyable coding experience.
+            Write code that reads like you think. YaarLang keeps things simple, fast, and fun.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <button className="group inline-flex items-center gap-2 rounded-xl bg-foreground px-5 py-3 text-sm font-semibold text-background shadow-[var(--shadow-elegant)] transition-all hover:-translate-y-0.5">
+            <a
+              href="#install"
+              className="group inline-flex items-center gap-2 rounded-xl bg-foreground px-5 py-3 text-sm font-semibold text-background shadow-[var(--shadow-elegant)] transition-all hover:-translate-y-0.5"
+            >
               Get Started
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground shadow-[var(--shadow-soft)] transition-all hover:-translate-y-0.5 hover:border-indigo-200">
+            </a>
+            <Link
+              to="/docs"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground shadow-[var(--shadow-soft)] transition-all hover:-translate-y-0.5 hover:border-indigo-200"
+            >
               View Documentation
-            </button>
-            <div className="ml-1 hidden items-center gap-2 rounded-xl border border-border bg-card/70 px-3.5 py-2.5 font-mono text-xs text-muted-foreground backdrop-blur sm:flex">
-              <span className="text-indigo-500">$</span> brew install yaarlang
-            </div>
+            </Link>
           </div>
 
           <div className="mt-10 flex items-center gap-6 text-xs text-muted-foreground">
@@ -85,14 +87,13 @@ function Index() {
       <Nav />
       <main>
         <Hero />
+        <InstallBanner />
         <Features />
-        <Playground />
         <Showcase />
+        <Playground />
         <Workflow />
         <Performance />
         <Ecosystem />
-        <DocsPreview />
-        <Community />
         <CTA />
       </main>
       <Footer />
