@@ -16,6 +16,7 @@ import { Route as DocsVariablesRouteImport } from './routes/docs/variables'
 import { Route as DocsOverviewRouteImport } from './routes/docs/overview'
 import { Route as DocsOperatorsRouteImport } from './routes/docs/operators'
 import { Route as DocsLoopsRouteImport } from './routes/docs/loops'
+import { Route as DocsInternalsRouteImport } from './routes/docs/internals'
 import { Route as DocsInstallationRouteImport } from './routes/docs/installation'
 import { Route as DocsInputRouteImport } from './routes/docs/input'
 import { Route as DocsFunctionsRouteImport } from './routes/docs/functions'
@@ -59,6 +60,11 @@ const DocsOperatorsRoute = DocsOperatorsRouteImport.update({
 const DocsLoopsRoute = DocsLoopsRouteImport.update({
   id: '/loops',
   path: '/loops',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsInternalsRoute = DocsInternalsRouteImport.update({
+  id: '/internals',
+  path: '/internals',
   getParentRoute: () => DocsRoute,
 } as any)
 const DocsInstallationRoute = DocsInstallationRouteImport.update({
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/docs/functions': typeof DocsFunctionsRoute
   '/docs/input': typeof DocsInputRoute
   '/docs/installation': typeof DocsInstallationRoute
+  '/docs/internals': typeof DocsInternalsRoute
   '/docs/loops': typeof DocsLoopsRoute
   '/docs/operators': typeof DocsOperatorsRoute
   '/docs/overview': typeof DocsOverviewRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/docs/functions': typeof DocsFunctionsRoute
   '/docs/input': typeof DocsInputRoute
   '/docs/installation': typeof DocsInstallationRoute
+  '/docs/internals': typeof DocsInternalsRoute
   '/docs/loops': typeof DocsLoopsRoute
   '/docs/operators': typeof DocsOperatorsRoute
   '/docs/overview': typeof DocsOverviewRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/docs/functions': typeof DocsFunctionsRoute
   '/docs/input': typeof DocsInputRoute
   '/docs/installation': typeof DocsInstallationRoute
+  '/docs/internals': typeof DocsInternalsRoute
   '/docs/loops': typeof DocsLoopsRoute
   '/docs/operators': typeof DocsOperatorsRoute
   '/docs/overview': typeof DocsOverviewRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/docs/functions'
     | '/docs/input'
     | '/docs/installation'
+    | '/docs/internals'
     | '/docs/loops'
     | '/docs/operators'
     | '/docs/overview'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/docs/functions'
     | '/docs/input'
     | '/docs/installation'
+    | '/docs/internals'
     | '/docs/loops'
     | '/docs/operators'
     | '/docs/overview'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/docs/functions'
     | '/docs/input'
     | '/docs/installation'
+    | '/docs/internals'
     | '/docs/loops'
     | '/docs/operators'
     | '/docs/overview'
@@ -271,6 +283,13 @@ declare module '@tanstack/react-router' {
       path: '/loops'
       fullPath: '/docs/loops'
       preLoaderRoute: typeof DocsLoopsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/internals': {
+      id: '/docs/internals'
+      path: '/internals'
+      fullPath: '/docs/internals'
+      preLoaderRoute: typeof DocsInternalsRouteImport
       parentRoute: typeof DocsRoute
     }
     '/docs/installation': {
@@ -349,6 +368,7 @@ interface DocsRouteChildren {
   DocsFunctionsRoute: typeof DocsFunctionsRoute
   DocsInputRoute: typeof DocsInputRoute
   DocsInstallationRoute: typeof DocsInstallationRoute
+  DocsInternalsRoute: typeof DocsInternalsRoute
   DocsLoopsRoute: typeof DocsLoopsRoute
   DocsOperatorsRoute: typeof DocsOperatorsRoute
   DocsOverviewRoute: typeof DocsOverviewRoute
@@ -366,6 +386,7 @@ const DocsRouteChildren: DocsRouteChildren = {
   DocsFunctionsRoute: DocsFunctionsRoute,
   DocsInputRoute: DocsInputRoute,
   DocsInstallationRoute: DocsInstallationRoute,
+  DocsInternalsRoute: DocsInternalsRoute,
   DocsLoopsRoute: DocsLoopsRoute,
   DocsOperatorsRoute: DocsOperatorsRoute,
   DocsOverviewRoute: DocsOverviewRoute,

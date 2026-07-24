@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { DocsNav } from "@/components/yaarlang/DocsNav";
 import { DocsSidebar } from "@/components/yaarlang/DocsSidebar";
+import { StarRepoPopup } from "@/components/yaarlang/StarRepoPopup";
 import { docsGroups } from "@/lib/docs-nav";
 
 export const Route = createFileRoute("/docs")({
@@ -15,6 +16,7 @@ function DocsLayout() {
         <DocsSidebar groups={docsGroups} />
         <Outlet />
       </div>
+      <StarRepoPopup />
     </div>
   );
 }

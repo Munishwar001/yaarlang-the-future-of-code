@@ -3,7 +3,7 @@ import {
   BookOpen, Zap, Globe, Sparkles, Package, Heart, ShieldCheck, GitBranch, Wrench,
   Play, Save, Share2, Wand2, Bug, Copy, Check, Terminal, Cpu, Gauge, MemoryStick, Timer,
   Command, Boxes, ScanLine, FileText, Braces, PanelsTopLeft,
-  ArrowRight, Star,
+  ArrowRight, Star, Github, Linkedin,
 } from "lucide-react";
 import { Logo } from "./Logo";
 import { runYaarLang } from "@/lib/yaarlang";
@@ -50,7 +50,7 @@ const features = [
   { icon: Package, title: "Package Manager", desc: "Built-in `yaar` CLI. Reproducible builds, workspaces, lockfiles." },
   { icon: Heart, title: "Developer Experience", desc: "Delightful errors, actionable hints, first-class editor support." },
   { icon: ShieldCheck, title: "Memory Safe", desc: "Ownership model with automatic borrow checking — zero runtime GC." },
-  { icon: GitBranch, title: "Open Source", desc: "Apache-2.0. Governed by an open RFC process and community." },
+  { icon: GitBranch, title: "Open Source", desc: "MIT licensed. Free to use, modify, and learn from." },
   { icon: Wrench, title: "Powerful Tooling", desc: "Debugger, profiler, formatter, linter — batteries included." },
 ];
 
@@ -153,7 +153,7 @@ export function Playground() {
               {result === null
                 ? "Click Run to compile and execute this code."
                 : result.error
-                  ? result.error
+                  ? [...result.output, `YaarLang error: ${result.error}`].join("\n")
                   : result.output.length > 0
                     ? result.output.join("\n")
                     : "(no output)"}
@@ -429,9 +429,32 @@ export function Footer() {
         ))}
       </div>
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
           <div>© 2026 YaarLang. Crafted with care.</div>
-          <div>Apache-2.0 · Open Source</div>
+          <div className="flex items-center gap-4">
+            <span>MIT · Open Source</span>
+            <span className="flex items-center gap-2">
+              Built by Munishwar Kalra
+              <a
+                href="https://github.com/Munishwar001"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Munishwar Kalra on GitHub"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Github className="h-3.5 w-3.5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/munishwar-kalra-751641232/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Munishwar Kalra on LinkedIn"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Linkedin className="h-3.5 w-3.5" />
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>

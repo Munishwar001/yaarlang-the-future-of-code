@@ -80,6 +80,19 @@ export const docsGroups: DocGroup[] = [
       },
     ],
   },
+  {
+    title: "Internals",
+    items: [
+      {
+        path: "/docs/internals",
+        label: "How It Works",
+        keywords: [
+          "lexer", "parser", "codegen", "AST", "compiler", "architecture", "internals",
+          "implementation", "tokens", "runtime", "eval", "recursive descent", "precedence",
+        ],
+      },
+    ],
+  },
 ];
 
 export const docsPageOrder: DocLink[] = docsGroups.flatMap((g) => g.items);

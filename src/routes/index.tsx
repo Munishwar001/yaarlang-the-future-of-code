@@ -65,12 +65,6 @@ function Hero() {
               View Documentation
             </Link>
           </div>
-
-          <div className="mt-10 flex items-center gap-6 text-xs text-muted-foreground">
-            <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-success" /> 48.2k stars</div>
-            <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-indigo-500" /> Apache-2.0</div>
-            <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-cyan-500" /> 12M downloads/mo</div>
-          </div>
         </div>
 
         <div className="animate-reveal-up" style={{ animationDelay: "120ms" }}>

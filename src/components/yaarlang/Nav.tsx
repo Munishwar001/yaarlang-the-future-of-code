@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 import { SiteSearch } from "./SiteSearch";
 
-const links = ["Features", "Documentation", "Playground"];
+const links = ["Features", "Playground", "Documentation"];
 
 function NavLink({ label, onNavigate, className }: { label: string; onNavigate?: () => void; className: string }) {
   if (label === "Documentation") {
