@@ -1,6 +1,6 @@
 {
   "name": "yaarlang",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple programming language built with JavaScript",
   "main": "compiler.js",
   "bin": {
