@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, TriangleAlert, Copy, Check } from "lucide-react";
 import { getDocsAdjacent } from "@/lib/docs-nav";
 
 export function DocsArticle({
@@ -43,10 +43,28 @@ export function InlineCode({ children }: { children: ReactNode }) {
 }
 
 export function CodeBlock({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
+
   return (
-    <pre className="overflow-x-auto rounded-2xl bg-[#0f172a] p-5 font-mono text-[12.5px] leading-6 text-slate-200">
-      {code}
-    </pre>
+    <div className="relative">
+      <pre className="overflow-x-auto rounded-2xl bg-[#0f172a] p-5 pr-12 font-mono text-[12.5px] leading-6 text-slate-200">
+        {code}
+      </pre>
+      <button
+        type="button"
+        onClick={handleCopy}
+        aria-label="Copy code"
+        className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-md text-slate-400 transition-colors hover:bg-white/10 hover:text-slate-200"
+      >
+        {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+      </button>
+    </div>
   );
 }
 
