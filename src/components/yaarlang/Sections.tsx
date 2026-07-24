@@ -176,29 +176,38 @@ const snippets = [
   { title: "Variables", code: `maan_lo naam = "yaar"
 maan_lo pi = 3.1415
 maan_lo sum = 10 + 20` },
-  { title: "Functions", code: `fn add(a: int, b: int) -> int {
-  return a + b
+  { title: "Functions", code: `kaam add(a, b) {
+  wapis a + b
+}
+bol add(3, 4)` },
+  { title: "Loops", code: `maan_lo i = 1
+jabtak i <= 5 {
+  bol i
+  i = i + 1
 }` },
-  { title: "Loops", code: `for i in 0..5 {
-  print(i)
+  { title: "Conditions", code: `agar score >= 90 {
+  bol "A"
+} nahito {
+  bol "keep going"
 }` },
-  { title: "Conditions", code: `if score >= 90 {
-  print("A")
-} else {
-  print("keep going")
-}` },
-  { title: "Classes", code: `class Point {
-  x: float
-  y: float
-  fn norm() -> float { sqrt(x*x + y*y) }
-}` },
-  { title: "Async", code: `async fn fetchUser(id) {
-  let res = await http.get("/u/" + id)
-  return res.json()
+  { title: "Arrays", code: `maan_lo nums = [10, 20, 30]
+jodo(nums, 40)
+bol nums[0]
+bol lambai(nums)` },
+  { title: "Errors", code: `agar age < 0 {
+  galti "Age cannot be negative"
 }` },
 ];
 
 export function Showcase() {
+  const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
+
+  const handleCopy = async (title: string, code: string) => {
+    await navigator.clipboard.writeText(code);
+    setCopiedTitle(title);
+    setTimeout(() => setCopiedTitle((current) => (current === title ? null : current)), 1800);
+  };
+
   return (
     <section className="border-y border-border bg-secondary/50">
       <div className="mx-auto max-w-7xl px-6 py-28">
@@ -209,18 +218,24 @@ export function Showcase() {
           {snippets.map((s) => (
             <div
               key={s.title}
-              className="group overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-soft)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]"
+              className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-soft)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]"
             >
               <div className="flex items-center justify-between px-5 py-3 border-b border-border">
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <Braces className="h-4 w-4 text-indigo-500" /> {s.title}
                 </div>
                 <div className="flex items-center gap-1 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
-                  <button className="grid h-7 w-7 place-items-center rounded-md hover:bg-secondary"><Copy className="h-3.5 w-3.5" /></button>
-                  <button className="grid h-7 w-7 place-items-center rounded-md hover:bg-secondary"><Play className="h-3.5 w-3.5" /></button>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(s.title, s.code)}
+                    aria-label={`Copy ${s.title} snippet`}
+                    className="grid h-7 w-7 place-items-center rounded-md hover:bg-secondary"
+                  >
+                    {copiedTitle === s.title ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                  </button>
                 </div>
               </div>
-              <pre className="bg-[#0f172a] p-5 font-mono text-[12.5px] leading-6 text-slate-200">{s.code}</pre>
+              <pre className="flex-1 bg-[#0f172a] p-5 font-mono text-[12.5px] leading-6 text-slate-200">{s.code}</pre>
             </div>
           ))}
         </div>

@@ -93,7 +93,7 @@ export function CodeEditor() {
               <div className="mb-1 flex items-center gap-2 text-slate-500">
                 <Terminal className="h-3.5 w-3.5" /> Output
               </div>
-              <div><span className="text-emerald-400">$</span> node index.js main.yl</div>
+              <div><span className="text-emerald-400">$</span> yaarlang main.yl</div>
               <div className="text-slate-100">Duniya</div>
               <div className="text-slate-100">30</div>
               <div className="text-slate-500">Program exited with code 0 · 8ms</div>
