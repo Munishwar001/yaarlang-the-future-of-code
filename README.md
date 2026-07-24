@@ -158,11 +158,14 @@ YaarLang error: Expected '{' to start block (line 3, column 8)
 
 ## VS Code Extension
 
-`packages/vscode-yaarlang` adds syntax highlighting for `.yl` files via a TextMate grammar — no language server or diagnostics yet, just colors. Install it from the packaged `.vsix`:
+`packages/vscode-yaarlang` adds syntax highlighting for `.yl` files via a TextMate grammar — no language server or diagnostics yet, just colors. It's not on the Marketplace, so install it from the `.vsix`:
 
 ```bash
-code --install-extension packages/vscode-yaarlang/vscode-yaarlang-0.0.1.vsix
+# Download the .vsix from the latest release, then:
+code --install-extension vscode-yaarlang-0.0.1.vsix
 ```
+
+Get the file from the [latest release](https://github.com/Munishwar001/yaarlang-the-future-of-code/releases/tag/vscode-yaarlang-v0.0.1), or — if you've cloned this repo — install it directly from `packages/vscode-yaarlang/vscode-yaarlang-0.0.1.vsix`.
 
 ## Playground
 

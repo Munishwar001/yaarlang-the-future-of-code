@@ -27,9 +27,9 @@ export function CodeEditor() {
           </div>
         </div>
 
-        <div className="grid grid-cols-[168px_minmax(0,1fr)]">
-          {/* sidebar */}
-          <aside className="border-r border-white/5 bg-white/[0.02] p-3 text-xs text-slate-400">
+        <div className="grid grid-cols-1 sm:grid-cols-[168px_minmax(0,1fr)]">
+          {/* sidebar — collapses on mobile so the editor gets the width instead of being squeezed */}
+          <aside className="hidden border-r border-white/5 bg-white/[0.02] p-3 text-xs text-slate-400 sm:block">
             <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500">
               <Folder className="h-3 w-3" /> Explorer
             </div>
@@ -55,7 +55,7 @@ export function CodeEditor() {
                 main.yl
               </span>
             </div>
-            <pre className="relative overflow-hidden px-2 py-4 font-mono text-[13px] leading-6">
+            <pre className="relative overflow-x-auto overflow-y-hidden px-2 py-4 font-mono text-[13px] leading-6">
               {[
                 ["1", <><span className={tokens.cm}>// A warm hello from YaarLang</span></>],
                 ["2", <><span className={tokens.kw}>maan_lo</span> <span className={tokens.id}>naam</span> <span className={tokens.kw}>=</span> <span className={tokens.str}>"Duniya"</span></>],

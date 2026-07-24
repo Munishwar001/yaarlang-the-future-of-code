@@ -29,7 +29,7 @@ export function DocsArticle({
   );
 }
 
-export function DocSection({ id, title, children }: { id: string; title: string; children: ReactNode }) {
+export function DocSection({ id, title, children }: { id: string; title: ReactNode; children: ReactNode }) {
   return (
     <section id={id} className="scroll-mt-24 border-b border-border py-8 first:pt-0 last:border-b-0">
       <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
