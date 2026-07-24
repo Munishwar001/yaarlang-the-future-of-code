@@ -11,6 +11,19 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DocsIndexRouteImport } from './routes/docs/index'
+import { Route as DocsVariablesRouteImport } from './routes/docs/variables'
+import { Route as DocsOverviewRouteImport } from './routes/docs/overview'
+import { Route as DocsOperatorsRouteImport } from './routes/docs/operators'
+import { Route as DocsLoopsRouteImport } from './routes/docs/loops'
+import { Route as DocsInstallationRouteImport } from './routes/docs/installation'
+import { Route as DocsInputRouteImport } from './routes/docs/input'
+import { Route as DocsFunctionsRouteImport } from './routes/docs/functions'
+import { Route as DocsErrorsRouteImport } from './routes/docs/errors'
+import { Route as DocsConditionsRouteImport } from './routes/docs/conditions'
+import { Route as DocsCommentsRouteImport } from './routes/docs/comments'
+import { Route as DocsCliUsageRouteImport } from './routes/docs/cli-usage'
+import { Route as DocsArraysRouteImport } from './routes/docs/arrays'
 
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
@@ -22,31 +35,179 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsVariablesRoute = DocsVariablesRouteImport.update({
+  id: '/variables',
+  path: '/variables',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsOverviewRoute = DocsOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsOperatorsRoute = DocsOperatorsRouteImport.update({
+  id: '/operators',
+  path: '/operators',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsLoopsRoute = DocsLoopsRouteImport.update({
+  id: '/loops',
+  path: '/loops',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsInstallationRoute = DocsInstallationRouteImport.update({
+  id: '/installation',
+  path: '/installation',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsInputRoute = DocsInputRouteImport.update({
+  id: '/input',
+  path: '/input',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsFunctionsRoute = DocsFunctionsRouteImport.update({
+  id: '/functions',
+  path: '/functions',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsErrorsRoute = DocsErrorsRouteImport.update({
+  id: '/errors',
+  path: '/errors',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsConditionsRoute = DocsConditionsRouteImport.update({
+  id: '/conditions',
+  path: '/conditions',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsCommentsRoute = DocsCommentsRouteImport.update({
+  id: '/comments',
+  path: '/comments',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsCliUsageRoute = DocsCliUsageRouteImport.update({
+  id: '/cli-usage',
+  path: '/cli-usage',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsArraysRoute = DocsArraysRouteImport.update({
+  id: '/arrays',
+  path: '/arrays',
+  getParentRoute: () => DocsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/docs/arrays': typeof DocsArraysRoute
+  '/docs/cli-usage': typeof DocsCliUsageRoute
+  '/docs/comments': typeof DocsCommentsRoute
+  '/docs/conditions': typeof DocsConditionsRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/functions': typeof DocsFunctionsRoute
+  '/docs/input': typeof DocsInputRoute
+  '/docs/installation': typeof DocsInstallationRoute
+  '/docs/loops': typeof DocsLoopsRoute
+  '/docs/operators': typeof DocsOperatorsRoute
+  '/docs/overview': typeof DocsOverviewRoute
+  '/docs/variables': typeof DocsVariablesRoute
+  '/docs/': typeof DocsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/docs': typeof DocsRoute
+  '/docs/arrays': typeof DocsArraysRoute
+  '/docs/cli-usage': typeof DocsCliUsageRoute
+  '/docs/comments': typeof DocsCommentsRoute
+  '/docs/conditions': typeof DocsConditionsRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/functions': typeof DocsFunctionsRoute
+  '/docs/input': typeof DocsInputRoute
+  '/docs/installation': typeof DocsInstallationRoute
+  '/docs/loops': typeof DocsLoopsRoute
+  '/docs/operators': typeof DocsOperatorsRoute
+  '/docs/overview': typeof DocsOverviewRoute
+  '/docs/variables': typeof DocsVariablesRoute
+  '/docs': typeof DocsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/docs': typeof DocsRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/docs/arrays': typeof DocsArraysRoute
+  '/docs/cli-usage': typeof DocsCliUsageRoute
+  '/docs/comments': typeof DocsCommentsRoute
+  '/docs/conditions': typeof DocsConditionsRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/functions': typeof DocsFunctionsRoute
+  '/docs/input': typeof DocsInputRoute
+  '/docs/installation': typeof DocsInstallationRoute
+  '/docs/loops': typeof DocsLoopsRoute
+  '/docs/operators': typeof DocsOperatorsRoute
+  '/docs/overview': typeof DocsOverviewRoute
+  '/docs/variables': typeof DocsVariablesRoute
+  '/docs/': typeof DocsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/docs'
+  fullPaths:
+    | '/'
+    | '/docs'
+    | '/docs/arrays'
+    | '/docs/cli-usage'
+    | '/docs/comments'
+    | '/docs/conditions'
+    | '/docs/errors'
+    | '/docs/functions'
+    | '/docs/input'
+    | '/docs/installation'
+    | '/docs/loops'
+    | '/docs/operators'
+    | '/docs/overview'
+    | '/docs/variables'
+    | '/docs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs'
-  id: '__root__' | '/' | '/docs'
+  to:
+    | '/'
+    | '/docs/arrays'
+    | '/docs/cli-usage'
+    | '/docs/comments'
+    | '/docs/conditions'
+    | '/docs/errors'
+    | '/docs/functions'
+    | '/docs/input'
+    | '/docs/installation'
+    | '/docs/loops'
+    | '/docs/operators'
+    | '/docs/overview'
+    | '/docs/variables'
+    | '/docs'
+  id:
+    | '__root__'
+    | '/'
+    | '/docs'
+    | '/docs/arrays'
+    | '/docs/cli-usage'
+    | '/docs/comments'
+    | '/docs/conditions'
+    | '/docs/errors'
+    | '/docs/functions'
+    | '/docs/input'
+    | '/docs/installation'
+    | '/docs/loops'
+    | '/docs/operators'
+    | '/docs/overview'
+    | '/docs/variables'
+    | '/docs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DocsRoute: typeof DocsRoute
+  DocsRoute: typeof DocsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +226,137 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/variables': {
+      id: '/docs/variables'
+      path: '/variables'
+      fullPath: '/docs/variables'
+      preLoaderRoute: typeof DocsVariablesRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/overview': {
+      id: '/docs/overview'
+      path: '/overview'
+      fullPath: '/docs/overview'
+      preLoaderRoute: typeof DocsOverviewRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/operators': {
+      id: '/docs/operators'
+      path: '/operators'
+      fullPath: '/docs/operators'
+      preLoaderRoute: typeof DocsOperatorsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/loops': {
+      id: '/docs/loops'
+      path: '/loops'
+      fullPath: '/docs/loops'
+      preLoaderRoute: typeof DocsLoopsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/installation': {
+      id: '/docs/installation'
+      path: '/installation'
+      fullPath: '/docs/installation'
+      preLoaderRoute: typeof DocsInstallationRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/input': {
+      id: '/docs/input'
+      path: '/input'
+      fullPath: '/docs/input'
+      preLoaderRoute: typeof DocsInputRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/functions': {
+      id: '/docs/functions'
+      path: '/functions'
+      fullPath: '/docs/functions'
+      preLoaderRoute: typeof DocsFunctionsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/errors': {
+      id: '/docs/errors'
+      path: '/errors'
+      fullPath: '/docs/errors'
+      preLoaderRoute: typeof DocsErrorsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/conditions': {
+      id: '/docs/conditions'
+      path: '/conditions'
+      fullPath: '/docs/conditions'
+      preLoaderRoute: typeof DocsConditionsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/comments': {
+      id: '/docs/comments'
+      path: '/comments'
+      fullPath: '/docs/comments'
+      preLoaderRoute: typeof DocsCommentsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/cli-usage': {
+      id: '/docs/cli-usage'
+      path: '/cli-usage'
+      fullPath: '/docs/cli-usage'
+      preLoaderRoute: typeof DocsCliUsageRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/arrays': {
+      id: '/docs/arrays'
+      path: '/arrays'
+      fullPath: '/docs/arrays'
+      preLoaderRoute: typeof DocsArraysRouteImport
+      parentRoute: typeof DocsRoute
+    }
   }
 }
 
+interface DocsRouteChildren {
+  DocsArraysRoute: typeof DocsArraysRoute
+  DocsCliUsageRoute: typeof DocsCliUsageRoute
+  DocsCommentsRoute: typeof DocsCommentsRoute
+  DocsConditionsRoute: typeof DocsConditionsRoute
+  DocsErrorsRoute: typeof DocsErrorsRoute
+  DocsFunctionsRoute: typeof DocsFunctionsRoute
+  DocsInputRoute: typeof DocsInputRoute
+  DocsInstallationRoute: typeof DocsInstallationRoute
+  DocsLoopsRoute: typeof DocsLoopsRoute
+  DocsOperatorsRoute: typeof DocsOperatorsRoute
+  DocsOverviewRoute: typeof DocsOverviewRoute
+  DocsVariablesRoute: typeof DocsVariablesRoute
+  DocsIndexRoute: typeof DocsIndexRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsArraysRoute: DocsArraysRoute,
+  DocsCliUsageRoute: DocsCliUsageRoute,
+  DocsCommentsRoute: DocsCommentsRoute,
+  DocsConditionsRoute: DocsConditionsRoute,
+  DocsErrorsRoute: DocsErrorsRoute,
+  DocsFunctionsRoute: DocsFunctionsRoute,
+  DocsInputRoute: DocsInputRoute,
+  DocsInstallationRoute: DocsInstallationRoute,
+  DocsLoopsRoute: DocsLoopsRoute,
+  DocsOperatorsRoute: DocsOperatorsRoute,
+  DocsOverviewRoute: DocsOverviewRoute,
+  DocsVariablesRoute: DocsVariablesRoute,
+  DocsIndexRoute: DocsIndexRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DocsRoute: DocsRoute,
+  DocsRoute: DocsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
