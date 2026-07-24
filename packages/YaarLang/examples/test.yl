@@ -1,0 +1,12 @@
+
+maan_lo age = 20
+
+agar age >= 18 {
+  bol 'Bada ho gaya'
+} nahito {
+  bol 'Abhi chhota hai'
+}
+
+maan_lo name = sun('Enter name: ')
+bol 'Hello ' + name
+

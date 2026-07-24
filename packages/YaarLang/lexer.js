@@ -16,7 +16,7 @@ export default function lexer(input) {
         word += char;
         char = input[++cursor];
       }
-      if (word === "maan_lo" || word === "bol") {
+      if (word === "maan_lo" || word === "bol" || word === "agar" || word === "nahito" || word === "sun") {
         tokens.push({ type: "keyword", value: word });
       } else {
         tokens.push({ type: "identifier", value: word });
@@ -33,8 +33,27 @@ export default function lexer(input) {
       continue;
     }
 
-    if (char === "=" || char === "+" || char === "-" || char === "*" || char === "/") {
+    const twoChar = char + (input[cursor + 1] || "");
+    if (twoChar === "==" || twoChar === "!=" || twoChar === "<=" || twoChar === ">=" || twoChar === "&&" || twoChar === "||") {
+      tokens.push({ type: "operator", value: twoChar });
+      cursor += 2;
+      continue;
+    }
+
+    if (char === "=" || char === "+" || char === "-" || char === "*" || char === "/" || char === "<" || char === ">") {
       tokens.push({ type: "operator", value: char });
+      cursor++;
+      continue;
+    }
+
+    if (char === "(" || char === ")") {
+      tokens.push({ type: "paren", value: char });
+      cursor++;
+      continue;
+    }
+
+    if (char === "{" || char === "}") {
+      tokens.push({ type: "brace", value: char });
       cursor++;
       continue;
     }

@@ -14,7 +14,7 @@
       "patterns": [
         {
           "name": "keyword.control.yaarlang",
-          "match": "\\b(maan_lo|bol)\\b"
+          "match": "\\b(maan_lo|bol|agar|nahito)\\b"
         }
       ]
     },
@@ -46,7 +46,7 @@
       "patterns": [
         {
           "name": "keyword.operator.yaarlang",
-          "match": "[=+\\-*/]"
+          "match": "==|!=|<=|>=|&&|\\|\\||[=+\\-*/<>]"
         }
       ]
     }

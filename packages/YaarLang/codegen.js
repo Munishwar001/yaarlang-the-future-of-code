@@ -1,13 +1,45 @@
 export default function codeGen(node) {
     switch(node.type){
         case 'Program':
-            return node.body.map(codeGen).join('\n');
+            return [
+                `function __yaarlang_print(value) {`,
+                `  console.log(typeof value === 'boolean' ? '\\x1b[33m' + (value ? 'sach' : 'jhoot') + '\\x1b[39m' : value);`,
+                `}`,
+                `function __yaarlang_input(prompt) {`,
+                `  if (prompt !== undefined) { process.stdout.write(String(prompt)); }`,
+                `  const buffer = Buffer.alloc(4096);`,
+                `  const bytesRead = fs.readSync(0, buffer, 0, 4096, null);`,
+                `  return buffer.toString('utf8', 0, bytesRead).trim();`,
+                `}`,
+                ...node.body.map(codeGen)
+            ].join('\n');
         case 'Declaration':
-            return `let ${node.name} = ${node.value};`;
-        case 'print':
-            if (node.expressionType === 'string') {
-                return `console.log(${JSON.stringify(node.expression)});`;
+            return node.value === null
+                ? `let ${node.name};`
+                : `let ${node.name} = ${codeGen(node.value)};`;
+        case 'Print':
+            return `__yaarlang_print(${codeGen(node.expression)});`;
+        case 'If': {
+            const consequent = node.consequent.map(codeGen).join('\n');
+            let code = `if (${codeGen(node.condition)}) {\n${consequent}\n}`;
+            if (node.alternate) {
+                code += ` else {\n${node.alternate.map(codeGen).join('\n')}\n}`;
             }
-            return `console.log(${node.expression});`;
+            return code;
+        }
+        case 'BinaryExpression':
+            return `(${codeGen(node.left)} ${node.operator} ${codeGen(node.right)})`;
+        case 'LogicalExpression':
+            return `(${codeGen(node.left)} ${node.operator} ${codeGen(node.right)})`;
+        case 'UnaryExpression':
+            return `(${node.operator}${codeGen(node.argument)})`;
+        case 'NumberLiteral':
+            return `${node.value}`;
+        case 'StringLiteral':
+            return JSON.stringify(node.value);
+        case 'Identifier':
+            return node.name;
+        case 'Input':
+            return node.prompt ? `__yaarlang_input(${codeGen(node.prompt)})` : `__yaarlang_input()`;
     }
 }
