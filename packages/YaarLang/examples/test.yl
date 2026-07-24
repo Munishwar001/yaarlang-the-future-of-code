@@ -42,3 +42,5 @@ bol temparr
 
 nikalo(temparr, 0)
 bol temparr
+
+galti 'Age cannot be negative'

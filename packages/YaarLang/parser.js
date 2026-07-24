@@ -23,6 +23,13 @@ export default function parser(tokens) {
     return t && t.type === "brace" && t.value === value;
   }
 
+  function errorAt(token, message) {
+    if (token) {
+      return new Error(`${message} (line ${token.line}, column ${token.col})`);
+    }
+    return new Error(`${message} (at end of input)`);
+  }
+
   function parseProgram() {
     const body = [];
     while (pos < tokens.length) {
@@ -57,6 +64,9 @@ export default function parser(tokens) {
     if (token.type === "keyword" && token.value === "nikalo") {
       return parseRemove();
     }
+    if (token.type === "keyword" && token.value === "galti") {
+      return parseThrow();
+    }
     if (token.type === "identifier") {
       const expr = parseExpression();
       if (isOp("=")) {
@@ -66,14 +76,14 @@ export default function parser(tokens) {
       }
       return { type: "ExpressionStatement", expression: expr };
     }
-    throw new Error(`Unexpected token '${token.value}'`);
+    throw errorAt(token, `Unexpected token '${token.value}'`);
   }
 
   function parseFunctionDeclaration() {
     next(); // consume 'kaam'
     const name = next().value; // function name
     if (!(peek() && peek().type === "paren" && peek().value === "(")) {
-      throw new Error("Expected '(' after function name");
+      throw errorAt(peek(), "Expected '(' after function name");
     }
     next(); // consume '('
     const params = [];
@@ -85,7 +95,7 @@ export default function parser(tokens) {
       }
     }
     if (!(peek() && peek().type === "paren" && peek().value === ")")) {
-      throw new Error("Expected ')' after parameters");
+      throw errorAt(peek(), "Expected ')' after parameters");
     }
     next(); // consume ')'
     const body = parseBlock();
@@ -101,15 +111,21 @@ export default function parser(tokens) {
     return { type: "Return", value };
   }
 
+  function parseThrow() {
+    next(); // consume 'galti'
+    const value = parseExpression();
+    return { type: "Throw", value };
+  }
+
   function parsePush() {
     next(); // consume 'jodo'
     if (!(peek() && peek().type === "paren" && peek().value === "(")) {
-      throw new Error("Expected '(' after jodo");
+      throw errorAt(peek(), "Expected '(' after jodo");
     }
     next(); // consume '('
     const target = parseExpression();
     if (!(peek() && peek().type === "comma")) {
-      throw new Error("Expected ',' after array in jodo(...)");
+      throw errorAt(peek(), "Expected ',' after array in jodo(...)");
     }
     next(); // consume ','
     const value = parseExpression();
@@ -119,7 +135,7 @@ export default function parser(tokens) {
       index = parseExpression();
     }
     if (!(peek() && peek().type === "paren" && peek().value === ")")) {
-      throw new Error("Expected ')' after jodo(...)");
+      throw errorAt(peek(), "Expected ')' after jodo(...)");
     }
     next(); // consume ')'
     return { type: "Push", target, value, index };
@@ -128,7 +144,7 @@ export default function parser(tokens) {
   function parseRemove() {
     next(); // consume 'nikalo'
     if (!(peek() && peek().type === "paren" && peek().value === "(")) {
-      throw new Error("Expected '(' after nikalo");
+      throw errorAt(peek(), "Expected '(' after nikalo");
     }
     next(); // consume '('
     const target = parseExpression();
@@ -138,7 +154,7 @@ export default function parser(tokens) {
       index = parseExpression();
     }
     if (!(peek() && peek().type === "paren" && peek().value === ")")) {
-      throw new Error("Expected ')' after nikalo(...)");
+      throw errorAt(peek(), "Expected ')' after nikalo(...)");
     }
     next(); // consume ')'
     return { type: "Remove", target, index };
@@ -153,7 +169,7 @@ export default function parser(tokens) {
 
   function parseBlock() {
     if (!isBrace("{")) {
-      throw new Error("Expected '{' to start block");
+      throw errorAt(peek(), "Expected '{' to start block");
     }
     next(); // consume '{'
     const body = [];
@@ -161,7 +177,7 @@ export default function parser(tokens) {
       body.push(parseStatement());
     }
     if (!isBrace("}")) {
-      throw new Error("Expected '}' to close block");
+      throw errorAt(peek(), "Expected '}' to close block");
     }
     next(); // consume '}'
     return body;
@@ -265,7 +281,7 @@ export default function parser(tokens) {
       next(); // consume '['
       const index = parseExpression();
       if (!(peek() && peek().type === "bracket" && peek().value === "]")) {
-        throw new Error("Expected ']' after index");
+        throw errorAt(peek(), "Expected ']' after index");
       }
       next(); // consume ']'
       expr = { type: "IndexExpression", object: expr, index };
@@ -273,11 +289,11 @@ export default function parser(tokens) {
     return expr;
   }
 
-  // atom := number | string | identifier | sun(...) | '(' expression ')' | '[' elements ']'
+  // atom := number | string | identifier | sun(...) | lambai(...) | galti | '(' expression ')' | '[' elements ']'
   function parseAtom() {
     const token = next();
     if (!token) {
-      throw new Error("Unexpected end of input while parsing expression");
+      throw errorAt(null, "Unexpected end of input while parsing expression");
     }
     if (token.type === "number") {
       return { type: "NumberLiteral", value: Number(token.value) };
@@ -297,7 +313,7 @@ export default function parser(tokens) {
           }
         }
         if (!(peek() && peek().type === "paren" && peek().value === ")")) {
-          throw new Error("Expected ')' after arguments");
+          throw errorAt(peek(), "Expected ')' after arguments");
         }
         next(); // consume ')'
         return { type: "CallExpression", callee: token.value, args };
@@ -312,7 +328,7 @@ export default function parser(tokens) {
           prompt = parseExpression();
         }
         if (!peek() || peek().type !== "paren" || peek().value !== ")") {
-          throw new Error("Expected closing ')' after sun(...)");
+          throw errorAt(peek(), "Expected closing ')' after sun(...)");
         }
         next(); // consume ')'
       }
@@ -320,12 +336,12 @@ export default function parser(tokens) {
     }
     if (token.type === "keyword" && token.value === "lambai") {
       if (!(peek() && peek().type === "paren" && peek().value === "(")) {
-        throw new Error("Expected '(' after lambai");
+        throw errorAt(peek(), "Expected '(' after lambai");
       }
       next(); // consume '('
       const target = parseExpression();
       if (!(peek() && peek().type === "paren" && peek().value === ")")) {
-        throw new Error("Expected ')' after lambai(...)");
+        throw errorAt(peek(), "Expected ')' after lambai(...)");
       }
       next(); // consume ')'
       return { type: "Length", target };
@@ -333,7 +349,7 @@ export default function parser(tokens) {
     if (token.type === "paren" && token.value === "(") {
       const expr = parseExpression();
       if (!peek() || peek().type !== "paren" || peek().value !== ")") {
-        throw new Error("Expected closing ')'");
+        throw errorAt(peek(), "Expected closing ')'");
       }
       next(); // consume ')'
       return expr;
@@ -348,12 +364,12 @@ export default function parser(tokens) {
         }
       }
       if (!(peek() && peek().type === "bracket" && peek().value === "]")) {
-        throw new Error("Expected ']' to close array literal");
+        throw errorAt(peek(), "Expected ']' to close array literal");
       }
       next(); // consume ']'
       return { type: "ArrayLiteral", elements };
     }
-    throw new Error(`Unexpected token '${token.value}' in expression`);
+    throw errorAt(token, `Unexpected token '${token.value}' in expression`);
   }
 
   return parseProgram();

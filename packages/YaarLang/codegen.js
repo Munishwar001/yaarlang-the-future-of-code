@@ -43,6 +43,8 @@ export default function codeGen(node) {
             return `function ${node.name}(${node.params.join(', ')}) {\n${node.body.map(codeGen).join('\n')}\n}`;
         case 'Return':
             return node.value === null ? `return;` : `return ${codeGen(node.value)};`;
+        case 'Throw':
+            return `throw new Error(${codeGen(node.value)});`;
         case 'CallExpression':
             return `${node.callee}(${node.args.map(codeGen).join(', ')})`;
         case 'ExpressionStatement':
