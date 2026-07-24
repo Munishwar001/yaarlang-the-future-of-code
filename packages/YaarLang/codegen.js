@@ -31,6 +31,14 @@ export default function codeGen(node) {
             return `while (${codeGen(node.condition)}) {\n${node.body.map(codeGen).join('\n')}\n}`;
         case 'Assignment':
             return `${node.name} = ${codeGen(node.value)};`;
+        case 'FunctionDeclaration':
+            return `function ${node.name}(${node.params.join(', ')}) {\n${node.body.map(codeGen).join('\n')}\n}`;
+        case 'Return':
+            return node.value === null ? `return;` : `return ${codeGen(node.value)};`;
+        case 'CallExpression':
+            return `${node.callee}(${node.args.map(codeGen).join(', ')})`;
+        case 'ExpressionStatement':
+            return `${codeGen(node.expression)};`;
         case 'BinaryExpression':
             return `(${codeGen(node.left)} ${node.operator} ${codeGen(node.right)})`;
         case 'LogicalExpression':

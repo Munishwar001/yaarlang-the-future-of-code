@@ -45,10 +45,51 @@ export default function parser(tokens) {
     if (token.type === "keyword" && token.value === "jabtak") {
       return parseWhile();
     }
+    if (token.type === "keyword" && token.value === "kaam") {
+      return parseFunctionDeclaration();
+    }
+    if (token.type === "keyword" && token.value === "wapis") {
+      return parseReturn();
+    }
     if (token.type === "identifier" && peekAt(1) && peekAt(1).type === "operator" && peekAt(1).value === "=") {
       return parseAssignment();
     }
+    if (token.type === "identifier" && peekAt(1) && peekAt(1).type === "paren" && peekAt(1).value === "(") {
+      return { type: "ExpressionStatement", expression: parseExpression() };
+    }
     throw new Error(`Unexpected token '${token.value}'`);
+  }
+
+  function parseFunctionDeclaration() {
+    next(); // consume 'kaam'
+    const name = next().value; // function name
+    if (!(peek() && peek().type === "paren" && peek().value === "(")) {
+      throw new Error("Expected '(' after function name");
+    }
+    next(); // consume '('
+    const params = [];
+    if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+      params.push(next().value);
+      while (peek() && peek().type === "comma") {
+        next(); // consume ','
+        params.push(next().value);
+      }
+    }
+    if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+      throw new Error("Expected ')' after parameters");
+    }
+    next(); // consume ')'
+    const body = parseBlock();
+    return { type: "FunctionDeclaration", name, params, body };
+  }
+
+  function parseReturn() {
+    next(); // consume 'wapis'
+    let value = null;
+    if (peek() && !isBrace("}")) {
+      value = parseExpression();
+    }
+    return { type: "Return", value };
   }
 
   function parseWhile() {
@@ -185,6 +226,22 @@ export default function parser(tokens) {
       return { type: "StringLiteral", value: token.value };
     }
     if (token.type === "identifier") {
+      if (peek() && peek().type === "paren" && peek().value === "(") {
+        next(); // consume '('
+        const args = [];
+        if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+          args.push(parseExpression());
+          while (peek() && peek().type === "comma") {
+            next(); // consume ','
+            args.push(parseExpression());
+          }
+        }
+        if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+          throw new Error("Expected ')' after arguments");
+        }
+        next(); // consume ')'
+        return { type: "CallExpression", callee: token.value, args };
+      }
       return { type: "Identifier", name: token.value };
     }
     if (token.type === "keyword" && token.value === "sun") {
