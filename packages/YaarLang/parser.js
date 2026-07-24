@@ -51,6 +51,12 @@ export default function parser(tokens) {
     if (token.type === "keyword" && token.value === "wapis") {
       return parseReturn();
     }
+    if (token.type === "keyword" && token.value === "jodo") {
+      return parsePush();
+    }
+    if (token.type === "keyword" && token.value === "nikalo") {
+      return parseRemove();
+    }
     if (token.type === "identifier") {
       const expr = parseExpression();
       if (isOp("=")) {
@@ -93,6 +99,49 @@ export default function parser(tokens) {
       value = parseExpression();
     }
     return { type: "Return", value };
+  }
+
+  function parsePush() {
+    next(); // consume 'jodo'
+    if (!(peek() && peek().type === "paren" && peek().value === "(")) {
+      throw new Error("Expected '(' after jodo");
+    }
+    next(); // consume '('
+    const target = parseExpression();
+    if (!(peek() && peek().type === "comma")) {
+      throw new Error("Expected ',' after array in jodo(...)");
+    }
+    next(); // consume ','
+    const value = parseExpression();
+    let index = null;
+    if (peek() && peek().type === "comma") {
+      next(); // consume ','
+      index = parseExpression();
+    }
+    if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+      throw new Error("Expected ')' after jodo(...)");
+    }
+    next(); // consume ')'
+    return { type: "Push", target, value, index };
+  }
+
+  function parseRemove() {
+    next(); // consume 'nikalo'
+    if (!(peek() && peek().type === "paren" && peek().value === "(")) {
+      throw new Error("Expected '(' after nikalo");
+    }
+    next(); // consume '('
+    const target = parseExpression();
+    let index = null;
+    if (peek() && peek().type === "comma") {
+      next(); // consume ','
+      index = parseExpression();
+    }
+    if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+      throw new Error("Expected ')' after nikalo(...)");
+    }
+    next(); // consume ')'
+    return { type: "Remove", target, index };
   }
 
   function parseWhile() {
@@ -268,6 +317,18 @@ export default function parser(tokens) {
         next(); // consume ')'
       }
       return { type: "Input", prompt };
+    }
+    if (token.type === "keyword" && token.value === "lambai") {
+      if (!(peek() && peek().type === "paren" && peek().value === "(")) {
+        throw new Error("Expected '(' after lambai");
+      }
+      next(); // consume '('
+      const target = parseExpression();
+      if (!(peek() && peek().type === "paren" && peek().value === ")")) {
+        throw new Error("Expected ')' after lambai(...)");
+      }
+      next(); // consume ')'
+      return { type: "Length", target };
     }
     if (token.type === "paren" && token.value === "(") {
       const expr = parseExpression();

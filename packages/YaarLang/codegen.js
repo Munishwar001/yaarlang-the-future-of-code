@@ -29,6 +29,14 @@ export default function codeGen(node) {
         }
         case 'While':
             return `while (${codeGen(node.condition)}) {\n${node.body.map(codeGen).join('\n')}\n}`;
+        case 'Push':
+            return node.index === null
+                ? `${codeGen(node.target)}.push(${codeGen(node.value)});`
+                : `${codeGen(node.target)}.splice(${codeGen(node.index)}, 0, ${codeGen(node.value)});`;
+        case 'Remove':
+            return node.index === null
+                ? `${codeGen(node.target)}.pop();`
+                : `${codeGen(node.target)}.splice(${codeGen(node.index)}, 1);`;
         case 'Assignment':
             return `${codeGen(node.target)} = ${codeGen(node.value)};`;
         case 'FunctionDeclaration':
@@ -57,5 +65,7 @@ export default function codeGen(node) {
             return `[${node.elements.map(codeGen).join(', ')}]`;
         case 'IndexExpression':
             return `${codeGen(node.object)}[${codeGen(node.index)}]`;
+        case 'Length':
+            return `${codeGen(node.target)}.length`;
     }
 }

@@ -25,3 +25,20 @@ maan_lo nums = [10, 20, 30]
 bol nums[0]             
 nums[1] = 99             
 bol nums 
+
+bol  "lanbai  " + lambai(nums)
+
+
+
+maan_lo temparr = []
+jodo(temparr, 1)
+jodo(temparr, 2)
+jodo(temparr, 3)
+jodo(temparr, 4, 1)
+bol temparr
+
+nikalo(temparr)
+bol temparr
+
+nikalo(temparr, 0)
+bol temparr
