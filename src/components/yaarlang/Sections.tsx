@@ -224,7 +224,7 @@ export function Showcase() {
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <Braces className="h-4 w-4 text-indigo-500" /> {s.title}
                 </div>
-                <div className="flex items-center gap-1 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="flex items-center gap-1 text-muted-foreground opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
                   <button
                     type="button"
                     onClick={() => handleCopy(s.title, s.code)}
