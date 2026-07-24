@@ -7,6 +7,9 @@ agar age >= 18 {
   bol 'Abhi chhota hai'
 }
 
-maan_lo name = sun('Enter name: ')
-bol 'Hello ' + name
 
+maan_lo i = 1
+jabtak i <= 5 {
+  bol i + "dfdef"
+  i = i + 1
+}

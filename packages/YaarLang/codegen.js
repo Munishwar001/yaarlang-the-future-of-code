@@ -27,6 +27,10 @@ export default function codeGen(node) {
             }
             return code;
         }
+        case 'While':
+            return `while (${codeGen(node.condition)}) {\n${node.body.map(codeGen).join('\n')}\n}`;
+        case 'Assignment':
+            return `${node.name} = ${codeGen(node.value)};`;
         case 'BinaryExpression':
             return `(${codeGen(node.left)} ${node.operator} ${codeGen(node.right)})`;
         case 'LogicalExpression':

@@ -9,6 +9,10 @@ export default function parser(tokens) {
     return tokens[pos++];
   }
 
+  function peekAt(offset) {
+    return tokens[pos + offset];
+  }
+
   function isOp(...values) {
     const t = peek();
     return t && t.type === "operator" && values.includes(t.value);
@@ -38,7 +42,27 @@ export default function parser(tokens) {
     if (token.type === "keyword" && token.value === "agar") {
       return parseIf();
     }
+    if (token.type === "keyword" && token.value === "jabtak") {
+      return parseWhile();
+    }
+    if (token.type === "identifier" && peekAt(1) && peekAt(1).type === "operator" && peekAt(1).value === "=") {
+      return parseAssignment();
+    }
     throw new Error(`Unexpected token '${token.value}'`);
+  }
+
+  function parseWhile() {
+    next(); // consume 'jabtak'
+    const condition = parseExpression();
+    const body = parseBlock();
+    return { type: "While", condition, body };
+  }
+
+  function parseAssignment() {
+    const name = next().value; // consume identifier
+    next(); // consume '='
+    const value = parseExpression();
+    return { type: "Assignment", name, value };
   }
 
   function parseBlock() {

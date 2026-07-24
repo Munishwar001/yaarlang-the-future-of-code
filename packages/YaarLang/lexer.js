@@ -16,7 +16,7 @@ export default function lexer(input) {
         word += char;
         char = input[++cursor];
       }
-      if (word === "maan_lo" || word === "bol" || word === "agar" || word === "nahito" || word === "sun") {
+      if (word === "maan_lo" || word === "bol" || word === "agar" || word === "nahito" || word === "sun" || word === "jabtak") {
         tokens.push({ type: "keyword", value: word });
       } else {
         tokens.push({ type: "identifier", value: word });
