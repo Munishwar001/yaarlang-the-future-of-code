@@ -23,6 +23,7 @@ import { Route as DocsErrorsRouteImport } from './routes/docs/errors'
 import { Route as DocsConditionsRouteImport } from './routes/docs/conditions'
 import { Route as DocsCommentsRouteImport } from './routes/docs/comments'
 import { Route as DocsCliUsageRouteImport } from './routes/docs/cli-usage'
+import { Route as DocsBooleansRouteImport } from './routes/docs/booleans'
 import { Route as DocsArraysRouteImport } from './routes/docs/arrays'
 
 const DocsRoute = DocsRouteImport.update({
@@ -95,6 +96,11 @@ const DocsCliUsageRoute = DocsCliUsageRouteImport.update({
   path: '/cli-usage',
   getParentRoute: () => DocsRoute,
 } as any)
+const DocsBooleansRoute = DocsBooleansRouteImport.update({
+  id: '/booleans',
+  path: '/booleans',
+  getParentRoute: () => DocsRoute,
+} as any)
 const DocsArraysRoute = DocsArraysRouteImport.update({
   id: '/arrays',
   path: '/arrays',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteWithChildren
   '/docs/arrays': typeof DocsArraysRoute
+  '/docs/booleans': typeof DocsBooleansRoute
   '/docs/cli-usage': typeof DocsCliUsageRoute
   '/docs/comments': typeof DocsCommentsRoute
   '/docs/conditions': typeof DocsConditionsRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/docs/arrays': typeof DocsArraysRoute
+  '/docs/booleans': typeof DocsBooleansRoute
   '/docs/cli-usage': typeof DocsCliUsageRoute
   '/docs/comments': typeof DocsCommentsRoute
   '/docs/conditions': typeof DocsConditionsRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteWithChildren
   '/docs/arrays': typeof DocsArraysRoute
+  '/docs/booleans': typeof DocsBooleansRoute
   '/docs/cli-usage': typeof DocsCliUsageRoute
   '/docs/comments': typeof DocsCommentsRoute
   '/docs/conditions': typeof DocsConditionsRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/'
     | '/docs'
     | '/docs/arrays'
+    | '/docs/booleans'
     | '/docs/cli-usage'
     | '/docs/comments'
     | '/docs/conditions'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/docs/arrays'
+    | '/docs/booleans'
     | '/docs/cli-usage'
     | '/docs/comments'
     | '/docs/conditions'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/'
     | '/docs'
     | '/docs/arrays'
+    | '/docs/booleans'
     | '/docs/cli-usage'
     | '/docs/comments'
     | '/docs/conditions'
@@ -310,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsCliUsageRouteImport
       parentRoute: typeof DocsRoute
     }
+    '/docs/booleans': {
+      id: '/docs/booleans'
+      path: '/booleans'
+      fullPath: '/docs/booleans'
+      preLoaderRoute: typeof DocsBooleansRouteImport
+      parentRoute: typeof DocsRoute
+    }
     '/docs/arrays': {
       id: '/docs/arrays'
       path: '/arrays'
@@ -322,6 +341,7 @@ declare module '@tanstack/react-router' {
 
 interface DocsRouteChildren {
   DocsArraysRoute: typeof DocsArraysRoute
+  DocsBooleansRoute: typeof DocsBooleansRoute
   DocsCliUsageRoute: typeof DocsCliUsageRoute
   DocsCommentsRoute: typeof DocsCommentsRoute
   DocsConditionsRoute: typeof DocsConditionsRoute
@@ -338,6 +358,7 @@ interface DocsRouteChildren {
 
 const DocsRouteChildren: DocsRouteChildren = {
   DocsArraysRoute: DocsArraysRoute,
+  DocsBooleansRoute: DocsBooleansRoute,
   DocsCliUsageRoute: DocsCliUsageRoute,
   DocsCommentsRoute: DocsCommentsRoute,
   DocsConditionsRoute: DocsConditionsRoute,

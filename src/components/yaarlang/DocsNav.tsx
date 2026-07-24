@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Search, Github, Menu } from "lucide-react";
+import { Github, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { DocGroup } from "@/lib/docs-nav";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
+import { SiteSearch } from "./SiteSearch";
 import { DocsSidebarNav } from "./DocsSidebar";
 
 const VERSION = "v1.0.1";
@@ -45,11 +46,7 @@ export function DocsNav({ groups }: { groups: DocGroup[] }) {
         </span>
 
         <div className="ml-auto flex items-center gap-2">
-          <div className="hidden items-center gap-2 rounded-lg border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground sm:flex">
-            <Search className="h-3.5 w-3.5" />
-            <span className="hidden md:inline">Search docs</span>
-            <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-[10px]">⌘K</kbd>
-          </div>
+          <SiteSearch />
           <a
             href="https://github.com/Munishwar001/yaarlang-the-future-of-code"
             target="_blank"
