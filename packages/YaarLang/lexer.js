@@ -58,6 +58,12 @@ export default function lexer(input) {
       continue;
     }
 
+    if (char === "[" || char === "]") {
+      tokens.push({ type: "bracket", value: char });
+      cursor++;
+      continue;
+    }
+
     if (char === ",") {
       tokens.push({ type: "comma", value: char });
       cursor++;

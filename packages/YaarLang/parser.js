@@ -51,11 +51,14 @@ export default function parser(tokens) {
     if (token.type === "keyword" && token.value === "wapis") {
       return parseReturn();
     }
-    if (token.type === "identifier" && peekAt(1) && peekAt(1).type === "operator" && peekAt(1).value === "=") {
-      return parseAssignment();
-    }
-    if (token.type === "identifier" && peekAt(1) && peekAt(1).type === "paren" && peekAt(1).value === "(") {
-      return { type: "ExpressionStatement", expression: parseExpression() };
+    if (token.type === "identifier") {
+      const expr = parseExpression();
+      if (isOp("=")) {
+        next(); // consume '='
+        const value = parseExpression();
+        return { type: "Assignment", target: expr, value };
+      }
+      return { type: "ExpressionStatement", expression: expr };
     }
     throw new Error(`Unexpected token '${token.value}'`);
   }
@@ -97,13 +100,6 @@ export default function parser(tokens) {
     const condition = parseExpression();
     const body = parseBlock();
     return { type: "While", condition, body };
-  }
-
-  function parseAssignment() {
-    const name = next().value; // consume identifier
-    next(); // consume '='
-    const value = parseExpression();
-    return { type: "Assignment", name, value };
   }
 
   function parseBlock() {
@@ -213,8 +209,23 @@ export default function parser(tokens) {
     return parsePrimary();
   }
 
-  // primary := number | string | identifier | '(' expression ')'
+  // primary := atom ('[' expression ']')*
   function parsePrimary() {
+    let expr = parseAtom();
+    while (peek() && peek().type === "bracket" && peek().value === "[") {
+      next(); // consume '['
+      const index = parseExpression();
+      if (!(peek() && peek().type === "bracket" && peek().value === "]")) {
+        throw new Error("Expected ']' after index");
+      }
+      next(); // consume ']'
+      expr = { type: "IndexExpression", object: expr, index };
+    }
+    return expr;
+  }
+
+  // atom := number | string | identifier | sun(...) | '(' expression ')' | '[' elements ']'
+  function parseAtom() {
     const token = next();
     if (!token) {
       throw new Error("Unexpected end of input while parsing expression");
@@ -265,6 +276,21 @@ export default function parser(tokens) {
       }
       next(); // consume ')'
       return expr;
+    }
+    if (token.type === "bracket" && token.value === "[") {
+      const elements = [];
+      if (!(peek() && peek().type === "bracket" && peek().value === "]")) {
+        elements.push(parseExpression());
+        while (peek() && peek().type === "comma") {
+          next(); // consume ','
+          elements.push(parseExpression());
+        }
+      }
+      if (!(peek() && peek().type === "bracket" && peek().value === "]")) {
+        throw new Error("Expected ']' to close array literal");
+      }
+      next(); // consume ']'
+      return { type: "ArrayLiteral", elements };
     }
     throw new Error(`Unexpected token '${token.value}' in expression`);
   }

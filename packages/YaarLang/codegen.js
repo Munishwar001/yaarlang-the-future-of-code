@@ -30,7 +30,7 @@ export default function codeGen(node) {
         case 'While':
             return `while (${codeGen(node.condition)}) {\n${node.body.map(codeGen).join('\n')}\n}`;
         case 'Assignment':
-            return `${node.name} = ${codeGen(node.value)};`;
+            return `${codeGen(node.target)} = ${codeGen(node.value)};`;
         case 'FunctionDeclaration':
             return `function ${node.name}(${node.params.join(', ')}) {\n${node.body.map(codeGen).join('\n')}\n}`;
         case 'Return':
@@ -53,5 +53,9 @@ export default function codeGen(node) {
             return node.name;
         case 'Input':
             return node.prompt ? `__yaarlang_input(${codeGen(node.prompt)})` : `__yaarlang_input()`;
+        case 'ArrayLiteral':
+            return `[${node.elements.map(codeGen).join(', ')}]`;
+        case 'IndexExpression':
+            return `${codeGen(node.object)}[${codeGen(node.index)}]`;
     }
 }

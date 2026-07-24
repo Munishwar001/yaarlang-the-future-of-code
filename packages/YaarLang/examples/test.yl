@@ -19,3 +19,9 @@ kaam add(a, b) {
   wapis a + b
 }
 bol add(3, 4)
+
+
+maan_lo nums = [10, 20, 30]
+bol nums[0]             
+nums[1] = 99             
+bol nums 
