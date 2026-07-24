@@ -158,14 +158,19 @@ YaarLang error: Expected '{' to start block (line 3, column 8)
 
 ## VS Code Extension
 
-`packages/vscode-yaarlang` adds syntax highlighting for `.yl` files via a TextMate grammar — no language server or diagnostics yet, just colors. It's not on the Marketplace, so install it from the `.vsix`:
+`packages/vscode-yaarlang` adds syntax highlighting for `.yl` files via a TextMate grammar — no language server or diagnostics yet, just colors. It's not on the Marketplace. One command downloads and installs it (nothing to substitute — paste it as-is):
 
-```bash
-# Download the .vsix from the latest release, then:
-code --install-extension vscode-yaarlang-0.0.1.vsix
+```powershell
+# Windows (PowerShell)
+irm https://github.com/Munishwar001/yaarlang-the-future-of-code/releases/download/vscode-yaarlang-v0.0.1/vscode-yaarlang-0.0.1.vsix -OutFile "$env:TEMP\vscode-yaarlang-0.0.1.vsix"; code --install-extension "$env:TEMP\vscode-yaarlang-0.0.1.vsix"
 ```
 
-Get the file from the [latest release](https://github.com/Munishwar001/yaarlang-the-future-of-code/releases/tag/vscode-yaarlang-v0.0.1), or — if you've cloned this repo — install it directly from `packages/vscode-yaarlang/vscode-yaarlang-0.0.1.vsix`.
+```bash
+# macOS / Linux
+curl -L -o /tmp/vscode-yaarlang-0.0.1.vsix https://github.com/Munishwar001/yaarlang-the-future-of-code/releases/download/vscode-yaarlang-v0.0.1/vscode-yaarlang-0.0.1.vsix && code --install-extension /tmp/vscode-yaarlang-0.0.1.vsix
+```
+
+Details, the manual-download option, and common install mistakes are in [`packages/vscode-yaarlang/README.md`](packages/vscode-yaarlang/README.md).
 
 ## Playground
 
