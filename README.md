@@ -9,7 +9,7 @@
 [![license](https://img.shields.io/npm/l/yaarlang.svg)](packages/YaarLang/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Munishwar001/yaarlang-the-future-of-code.svg?style=social)](https://github.com/Munishwar001/yaarlang-the-future-of-code)
 
-**A toy programming language with Hinglish keywords — write `maan_lo` instead of `let`, `agar` instead of `if`.**
+**A programming language with Hinglish keywords — write `maan_lo` instead of `let`, `agar` instead of `if`.**
 
 </div>
 
