@@ -51,6 +51,8 @@ Most "learn to build a language" projects stay a toy demo. YaarLang is the same 
 
 ## Installation
 
+Available on npm: [npmjs.com/package/yaarlang](https://www.npmjs.com/package/yaarlang)
+
 ```bash
 npm install -g yaarlang
 ```
